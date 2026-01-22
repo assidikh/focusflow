@@ -92,3 +92,94 @@ modeBtns.forEach(btn => {
 
 // Initialisation
 updateDisplay();
+
+
+// ========================================
+// TO-DO LIST avec localStorage
+// ========================================
+
+const taskInput = document.getElementById('taskInput');
+const addTaskBtn = document.getElementById('addTaskBtn');
+const taskList = document.getElementById('taskList');
+
+let tasks = [];
+
+// Charger les tâches depuis localStorage
+function loadTasks() {
+    const savedTasks = localStorage.getItem('focusflow-tasks');
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+        renderTasks();
+    }
+}
+
+// Sauvegarder dans localStorage
+function saveTasks() {
+    localStorage.setItem('focusflow-tasks', JSON.stringify(tasks));
+}
+
+// Afficher les tâches
+function renderTasks() {
+    taskList.innerHTML = '';
+    
+    tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.className = `task-item ${task.completed ? 'completed' : ''}`;
+        
+        li.innerHTML = `
+            <span onclick="toggleTask(${index})" style="cursor: pointer; flex: 1;">
+                ${task.completed ? '✅' : '⭕'} ${task.text}
+            </span>
+            <button onclick="deleteTask(${index})">🗑️ Supprimer</button>
+        `;
+        
+        taskList.appendChild(li);
+    });
+}
+
+// Ajouter une tâche
+function addTask() {
+    const text = taskInput.value.trim();
+    
+    if (text === '') {
+        alert('⚠️ Veuillez entrer une tâche !');
+        return;
+    }
+    
+    tasks.push({
+        text: text,
+        completed: false,
+        createdAt: new Date().toISOString()
+    });
+    
+    taskInput.value = '';
+    saveTasks();
+    renderTasks();
+}
+
+// Marquer comme complétée
+function toggleTask(index) {
+    tasks[index].completed = !tasks[index].completed;
+    saveTasks();
+    renderTasks();
+}
+
+// Supprimer une tâche
+function deleteTask(index) {
+    if (confirm('🗑️ Supprimer cette tâche ?')) {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
+}
+
+// Event Listeners
+addTaskBtn.addEventListener('click', addTask);
+taskInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});
+
+// Initialisation
+loadTasks();
