@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow - Pomodoro & Tasks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 FocusFlow</h1>
+            <p class="subtitle">Restez concentré, soyez productif</p>
+        </header>
+
+        <!-- Section Timer Pomodoro -->
+        <section class="timer-section">
+            <div class="timer-display">
+                <span id="minutes">25</span>:<span id="seconds">00</span>
+            </div>
+            <div class="timer-controls">
+                <button id="startBtn">▶️ Démarrer</button>
+                <button id="pauseBtn">⏸️ Pause</button>
+                <button id="resetBtn">🔄 Reset</button>
+            </div>
+            <div class="mode-switch">
+                <button class="mode-btn active" data-mode="work">Travail (25min)</button>
+                <button class="mode-btn" data-mode="break">Pause (5min)</button>
+            </div>
+        </section>
+
+        <!-- Section To-Do List -->
+        <section class="tasks-section">
+            <h2>📝 Mes tâches</h2>
+            <div class="task-input">
+                <input type="text" id="taskInput" placeholder="Nouvelle tâche...">
+                <button id="addTaskBtn">➕ Ajouter</button>
+            </div>
+            <ul id="taskList"></ul>
+        </section>
+
+        <footer>
+            <p>Fait avec ❤️ | Projet Git/GitHub</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
