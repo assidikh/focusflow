@@ -130,7 +130,7 @@ function renderTasks() {
             <span onclick="toggleTask(${index})" style="cursor: pointer; flex: 1;">
                 ${task.completed ? '✅' : '⭕'} ${task.text}
             </span>
-            <button onclick="deleteTask(${index})">🗑️ Supprimer</button>
+            <button onclick="deleteTask(${index})">🗑️ X</button>
         `;
         
         taskList.appendChild(li);
