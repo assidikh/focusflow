@@ -183,3 +183,67 @@ taskInput.addEventListener('keypress', (e) => {
 
 // Initialisation
 loadTasks();
+
+
+// ========================================
+// RÉINITIALISATION COMPLÈTE
+// ========================================
+
+const resetAllBtn = document.getElementById('resetAllBtn');
+
+function resetEverything() {
+    // Demander confirmation
+    const confirmation = confirm(
+        '⚠️ ATTENTION !\n\n' +
+        'Cette action va :\n' +
+        '• Supprimer TOUTES vos tâches\n' +
+        '• Réinitialiser le timer\n' +
+        '• Vider le cache de l\'application\n' +
+        '• Recharger la page\n\n' +
+        'Voulez-vous vraiment continuer ?'
+    );
+    
+    if (!confirmation) {
+        return; // L'utilisateur a annulé
+    }
+    
+    // Double confirmation pour plus de sécurité
+    const doubleConfirm = confirm(
+        '🚨 Dernière confirmation !\n\n' +
+        'Êtes-vous VRAIMENT sûr ?\n' +
+        'Cette action est IRRÉVERSIBLE !'
+    );
+    
+    if (!doubleConfirm) {
+        return;
+    }
+    
+    try {
+        // 1. Vider le localStorage (supprime les tâches)
+        localStorage.clear();
+        
+        // 2. Vider le sessionStorage (si utilisé)
+        sessionStorage.clear();
+        
+        // 3. Si vous utilisez des cookies, les supprimer aussi
+        document.cookie.split(";").forEach(function(c) { 
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+        });
+        
+        // 4. Afficher un message de succès
+        alert('✅ Réinitialisation réussie !\n\nLa page va se recharger...');
+        
+        // 5. Recharger la page en vidant le cache
+        // true = force le rechargement depuis le serveur
+        window.location.reload(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de la réinitialisation:', error);
+        alert('❌ Erreur lors de la réinitialisation.\n\nVeuillez vider manuellement le cache de votre navigateur.');
+    }
+}
+
+// Event Listener
+if (resetAllBtn) {
+    resetAllBtn.addEventListener('click', resetEverything);
+}
