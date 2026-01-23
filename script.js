@@ -198,7 +198,6 @@ function resetEverything() {
         'Cette action va :\n' +
         '• Supprimer TOUTES vos tâches\n' +
         '• Réinitialiser le timer\n' +
-        '• Vider le cache de l\'application\n' +
         '• Recharger la page\n\n' +
         'Voulez-vous vraiment continuer ?'
     );
@@ -207,16 +206,7 @@ function resetEverything() {
         return; // L'utilisateur a annulé
     }
     
-    // Double confirmation pour plus de sécurité
-    const doubleConfirm = confirm(
-        '🚨 Dernière confirmation !\n\n' +
-        'Êtes-vous VRAIMENT sûr ?\n' +
-        'Cette action est IRRÉVERSIBLE !'
-    );
-    
-    if (!doubleConfirm) {
-        return;
-    }
+
     
     try {
         // 1. Vider le localStorage (supprime les tâches)
